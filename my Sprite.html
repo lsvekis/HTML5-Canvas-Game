@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sprite Sheet Example</title>
+  <style>
+    canvas { border: 1px solid #ccc; display: block; margin: 20px auto; }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="300" height="150"></canvas>
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const spriteSheet = new Image();
+    spriteSheet.src = "assets/sprites.png"; // Sprite sheet with 4 frames in a row
+    // Define sprite sheet frame properties
+    const frameWidth = 64;
+    const frameHeight = 64;
+    const totalFrames = 4;
+    let currentFrame = 0;
+    spriteSheet.onload = function() {
+      animateSprite();
+    };
+    function animateSprite() {
+      // Clear previous frame
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Calculate source x coordinate for current frame
+      const sx = currentFrame * frameWidth;
+      // Draw the current frame
+      ctx.drawImage(spriteSheet, sx, 0, frameWidth, frameHeight, 50, 50, frameWidth, frameHeight);
+      // Update frame index
+      currentFrame = (currentFrame + 1) % totalFrames;
+      // Loop the animation
+      setTimeout(animateSprite, 200); // Change frame every 200ms
+    }
+  </script>
+</body>
+</html>
