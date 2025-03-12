@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Load Image Example</title>
+  <style>
+    canvas { border: 1px solid #ccc; display: block; margin: 20px auto; }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="500" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    // Create an image object
+    const img = new Image();
+    img.src = "assets/myImage.png"; // Ensure this path points to your image file
+    // Draw image once it's loaded
+    img.onload = function() {
+      ctx.drawImage(img, 0, 0);
+    };
+  </script>
+</body>
+</html>
