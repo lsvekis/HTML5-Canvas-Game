@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Keyboard Input Example</title>
+  <style>
+    canvas { border: 1px solid #ccc; display: block; margin: 20px auto; }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="500" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    let keys = {};
+    // Listen for keydown events
+    document.addEventListener("keydown", function(event) {
+      keys[event.key] = true;
+      console.log("Key down:", event.key);
+    });
+    // Listen for keyup events
+    document.addEventListener("keyup", function(event) {
+      keys[event.key] = false;
+      console.log("Key up:", event.key);
+    });
+    // Simple game loop to show key state
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = "20px Arial";
+      ctx.fillStyle = "black";
+      ctx.fillText("Press arrow keys or spacebar!", 120, 50);
+      // Example: Drawing a rectangle that moves based on arrow key input
+      let x = 250, y = 200;
+      if (keys["ArrowLeft"]) { x -= 5; }
+      if (keys["ArrowRight"]) { x += 5; }
+      if (keys["ArrowUp"]) { y -= 5; }
+      if (keys["ArrowDown"]) { y += 5; }
+      ctx.fillStyle = "blue";
+      ctx.fillRect(x - 25, y - 25, 50, 50);
+      // Example: Spacebar pressed
+      if (keys[" "]) {
+        ctx.fillStyle = "red";
+        ctx.fillText("Spacebar pressed!", 180, 350);
+      }
+      requestAnimationFrame(gameLoop);
+    }
+    gameLoop();
+  </script>
+</body>
+</html>
