@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scaling Image Example</title>
+  <style>
+    canvas { border: 1px solid #ccc; display: block; margin: 20px auto; }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="600" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const img = new Image();
+    img.src = "assets/myImage.png";
+    img.onload = function() {
+      // Draw full image at original size at position (10,10)
+      ctx.drawImage(img, 10, 10);
+      // Draw the image scaled to half its size at position (300,10)
+      ctx.drawImage(img, 300, 10, img.width / 2, img.height / 2);
+      // Draw a clipped portion of the image, scaled to a specific size
+      // (sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+      ctx.drawImage(img, 50, 50, 100, 100, 10, 200, 200, 200);
+    };
+  </script>
+</body>
+</html>
