@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sprite Animation in Game Loop</title>
+  <style>
+    canvas { border: 1px solid #ccc; display: block; margin: 20px auto; }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="400" height="300"></canvas>
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const spriteSheet = new Image();
+    spriteSheet.src = "assets/sprites.png"; // Assume a sprite sheet with 4 frames
+    const frameWidth = 64;
+    const frameHeight = 64;
+    const totalFrames = 4;
+    let currentFrame = 0;
+    let frameTimer = 0;
+    const frameInterval = 200; // Change frame every 200ms
+    function updateAnimation(deltaTime) {
+      frameTimer += deltaTime;
+      if (frameTimer > frameInterval) {
+        currentFrame = (currentFrame + 1) % totalFrames;
+        frameTimer = 0;
+      }
+    }
+    function drawSprite() {
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const sx = currentFrame * frameWidth;
+      ctx.drawImage(spriteSheet, sx, 0, frameWidth, frameHeight, 150, 100, frameWidth, frameHeight);
+    }
+    let lastTime = performance.now();
+    function gameLoop(currentTime) {
+      const deltaTime = currentTime - lastTime;
+      lastTime = currentTime;
+      updateAnimation(deltaTime);
+      drawSprite();
+      requestAnimationFrame(gameLoop);
+    }
+    spriteSheet.onload = function() {
+      requestAnimationFrame(gameLoop);
+    };
+  </script>
+</body>
+</html>
