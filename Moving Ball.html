@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Animation</title>
+</head>
+<body>
+    <canvas id="gameCanvas" width="500" height="300"></canvas>
+    <script>
+        let canvas = document.getElementById("gameCanvas");
+        let ctx = canvas.getContext("2d");
+        let x = 50;
+        let speed = 2;
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous frame
+            ctx.fillStyle = "red";
+            ctx.beginPath();
+            ctx.arc(x, 150, 20, 0, Math.PI * 2);
+            ctx.fill();
+            x += speed; // Move the ball
+            if (x > canvas.width || x < 0) {
+                speed = -speed;
+            }
+            requestAnimationFrame(update);
+        }
+        update();
+    </script>
+</body>
+</html>
