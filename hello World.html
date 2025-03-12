@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World Canvas</title>
+</head>
+<body>
+    <canvas id="gameCanvas" width="500" height="300"></canvas>
+    <script>
+        let canvas = document.getElementById("gameCanvas");
+        let ctx = canvas.getContext("2d");
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText("Hello, World!", 150, 150);
+    </script>
+</body>
+</html>
