@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Basic Animation</title>
+  <style>
+    canvas { border: 1px solid #000; }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="600" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    let x = 50; // initial x position
+    let speed = 2; // speed of movement
+    function update() {
+      // Update game state
+      x += speed;
+      if (x > canvas.width || x < 0) {
+        speed = -speed;
+      }
+    }
+    function draw() {
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Draw a circle
+      ctx.beginPath();
+      ctx.arc(x, canvas.height / 2, 30, 0, Math.PI * 2);
+      ctx.fillStyle = "tomato";
+      ctx.fill();
+    }
+    function gameLoop() {
+      update(); // update game state
+      draw();   // draw the scene
+      requestAnimationFrame(gameLoop); // schedule the next frame
+    }
+    gameLoop(); // Start the loop
+  </script>
+</body>
+</html>
