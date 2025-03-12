@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Player Controller Example</title>
+  <style>
+    canvas { border: 1px solid #ccc; display: block; margin: 20px auto; }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="500" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    // Player object with initial position and speed
+    let player = {
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      width: 40,
+      height: 40,
+      speed: 5
+    };
+    // Object to track key states
+    let keys = {};
+    document.addEventListener("keydown", function(event) {
+      keys[event.key] = true;
+    });
+    document.addEventListener("keyup", function(event) {
+      keys[event.key] = false;
+    });
+    // Update player's position based on keyboard input
+    function updatePlayer() {
+      if (keys["ArrowLeft"]) player.x -= player.speed;
+      if (keys["ArrowRight"]) player.x += player.speed;
+      if (keys["ArrowUp"]) player.y -= player.speed;
+      if (keys["ArrowDown"]) player.y += player.speed;
+      // Ensure player stays within canvas boundaries
+      player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+      player.y = Math.max(0, Math.min(canvas.height - player.height, player.y));
+    }
+    function drawPlayer() {
+      ctx.fillStyle = "dodgerblue";
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+    }
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      updatePlayer();
+      drawPlayer();
+      requestAnimationFrame(gameLoop);
+    }
+    gameLoop();
+  </script>
+</body>
+</html>
