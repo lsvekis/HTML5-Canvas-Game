@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Input Example</title>
+  <style>
+    canvas { border: 1px solid #ccc; display: block; margin: 20px auto; }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="500" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    let mousePos = { x: 0, y: 0 };
+    let clicked = false;
+    // Detect mouse movement
+    canvas.addEventListener("mousemove", function(event) {
+      const rect = canvas.getBoundingClientRect();
+      mousePos.x = event.clientX - rect.left;
+      mousePos.y = event.clientY - rect.top;
+    });
+    // Detect mouse click
+    canvas.addEventListener("click", function(event) {
+      clicked = true;
+      console.log("Canvas clicked at:", mousePos);
+    });
+    // Game loop to display mouse position
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = "18px Arial";
+      ctx.fillStyle = "black";
+      ctx.fillText("Mouse Position: (" + mousePos.x + ", " + mousePos.y + ")", 20, 30);
+      // Draw a circle at the mouse position
+      ctx.beginPath();
+      ctx.arc(mousePos.x, mousePos.y, 10, 0, Math.PI * 2);
+      ctx.fillStyle = clicked ? "red" : "green";
+      ctx.fill();
+      // Reset click flag for next frame
+      clicked = false;
+      requestAnimationFrame(gameLoop);
+    }
+    gameLoop();
+  </script>
+</body>
+</html>
