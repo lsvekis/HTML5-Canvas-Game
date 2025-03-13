@@ -1,0 +1,25 @@
+<canvas id="gameCanvas" width="400" height="300"></canvas>
+<script>
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+  const rect1 = { x: 50, y: 50, width: 40, height: 40 };
+  const rect2 = { x: 80, y: 70, width: 40, height: 40 };
+  function aabbCollision(r1, r2) {
+    return (
+      r1.x < r2.x + r2.width &&
+      r1.x + r1.width > r2.x &&
+      r1.y < r2.y + r2.height &&
+      r1.y + r1.height > r2.y
+    );
+  }
+  // Draw rectangles
+  ctx.fillStyle = "blue";
+  ctx.fillRect(rect1.x, rect1.y, rect1.width, rect1.height);
+  ctx.fillStyle = "red";
+  ctx.fillRect(rect2.x, rect2.y, rect2.width, rect2.height);
+  if (aabbCollision(rect1, rect2)) {
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "green";
+    ctx.fillText("Collision!", 100, 150);
+  }
+</script>
