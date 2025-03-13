@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio Pool Example</title>
+</head>
+<body>
+  <script>
+    // Create an audio pool for the shooting sound
+    const shootSoundPool = [];
+    const poolSize = 5;
+    for (let i = 0; i < poolSize; i++) {
+      const sound = new Audio("assets/shoot.mp3");
+      shootSoundPool.push(sound);
+    }
+    // Function to play shooting sound
+    function playShootSound() {
+      // Find a sound that is not currently playing
+      const sound = shootSoundPool.find(s => s.paused);
+      if (sound) {
+        sound.currentTime = 0;
+        sound.play();
+      }
+    }
+    // Simulate shooting event on keydown (e.g., "s" key)
+    document.addEventListener("keydown", function(event) {
+      if (event.key.toLowerCase() === "s") {
+        playShootSound();
+      }
+    });
+  </script>
+</body>
+</html>
