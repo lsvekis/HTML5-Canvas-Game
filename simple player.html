@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Player Character Example</title>
+  <style>
+    canvas { border: 1px solid #ccc; display: block; margin: 20px auto; background: #87CEEB; }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="800" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    // Define the player character
+    let player = {
+      x: 100,
+      y: 300,
+      width: 40,
+      height: 60,
+      vx: 0,
+      vy: 0,
+      speed: 5,
+      jumping: false,
+      jumpStrength: -15
+    };
+    // Basic keyboard input handling
+    let keys = {};
+    document.addEventListener("keydown", (event) => keys[event.key] = true);
+    document.addEventListener("keyup", (event) => keys[event.key] = false);
+    function updatePlayer() {
+      // Horizontal movement
+      if (keys["ArrowLeft"]) { player.vx = -player.speed; }
+      else if (keys["ArrowRight"]) { player.vx = player.speed; }
+      else { player.vx = 0; }
+      // Jumping
+      if (keys[" "] && !player.jumping) {
+        player.vy = player.jumpStrength;
+        player.jumping = true;
+      }
+      // Gravity and movement
+      player.vy += 0.8; // gravity
+      player.x += player.vx;
+      player.y += player.vy;
+      // Floor collision (simple ground at y=360)
+      if (player.y + player.height > 360) {
+        player.y = 360 - player.height;
+        player.vy = 0;
+        player.jumping = false;
+      }
+    }
+    function drawPlayer() {
+      ctx.fillStyle = "red";
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+    }
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Draw a simple ground
+      ctx.fillStyle = "green";
+      ctx.fillRect(0, 360, canvas.width, 40);
+      updatePlayer();
+      drawPlayer();
+      requestAnimationFrame(gameLoop);
+    }
+    gameLoop();
+  </script>
+</body>
+</html>
