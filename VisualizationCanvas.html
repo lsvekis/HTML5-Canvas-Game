@@ -1,0 +1,30 @@
+<canvas id="gameCanvas" width="400" height="300"></canvas>
+<script>
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+  const circleA = { x: 100, y: 100, radius: 30 };
+  const circleB = { x: 130, y: 130, radius: 30 };
+  function circleCollision(c1, c2) {
+    const dx = c1.x - c2.x;
+    const dy = c1.y - c2.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    return distance < c1.radius + c2.radius;
+  }
+  // Draw circles
+  ctx.fillStyle = "purple";
+  ctx.beginPath();
+  ctx.arc(circleA.x, circleA.y, circleA.radius, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = "orange";
+  ctx.beginPath();
+  ctx.arc(circleB.x, circleB.y, circleB.radius, 0, Math.PI * 2);
+  ctx.fill();
+  // Display collision status
+  ctx.font = "20px Arial";
+  ctx.fillStyle = "black";
+  ctx.fillText(
+    circleCollision(circleA, circleB) ? "Collision!" : "No Collision",
+    50,
+    250
+  );
+</script>
