@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio Example</title>
+</head>
+<body>
+  <script>
+    // Create an Audio object
+    const jumpSound = new Audio("assets/jump.mp3");
+    // Preload audio
+    jumpSound.addEventListener("canplaythrough", function() {
+      console.log("Jump sound loaded and ready to play.");
+    });
+    // Play the sound
+    function playJumpSound() {
+      jumpSound.currentTime = 0; // Reset to start
+      jumpSound.play();
+    }
+    // Simulate jump event after 2 seconds
+    setTimeout(playJumpSound, 2000);
+  </script>
+</body>
+</html>
