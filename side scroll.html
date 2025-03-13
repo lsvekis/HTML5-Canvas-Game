@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Side-Scrolling Game Setup</title>
+  <style>
+    canvas { border: 1px solid #ccc; display: block; margin: 20px auto; background: #87CEEB; }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="800" height="400"></canvas>
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    // Background image for parallax (assume an image of clouds or distant hills)
+    const bgImage = new Image();
+    bgImage.src = "assets/test.jpg"; // Replace with your background image path
+    let bgX = 0; // background offset
+    const scrollSpeed = 2;
+    function updateBackground() {
+      bgX -= scrollSpeed;
+      if (bgX <= -canvas.width) {
+        bgX = 0;
+      }
+    }
+    function drawBackground() {
+      // Draw the background twice for seamless scrolling
+      ctx.drawImage(bgImage, bgX, 0, canvas.width, canvas.height);
+      ctx.drawImage(bgImage, bgX + canvas.width, 0, canvas.width, canvas.height);
+    }
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      updateBackground();
+      drawBackground();
+      // Other game elements will be drawn here later...
+      requestAnimationFrame(gameLoop);
+    }
+    bgImage.onload = () => {
+      gameLoop();
+    };
+  </script>
+</body>
+</html>
